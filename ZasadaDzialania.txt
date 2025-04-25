@@ -1,0 +1,35 @@
+Class Constructor fileLine
+    stack cards[13]
+    methods:
+    takeOffTop(int howMuch, Where)
+
+
+
+    putOnTop(Card card)
+    shuffleDeck()
+    isEmpty() -> bool
+
+Class Card
+    int value
+    string suit
+    methods:
+    displayCard() -> string
+
+Class Game
+    stack drawPile
+    stack discardPile
+    stack foundations[4]
+    stack tableau[7]
+    methods:
+    initializeGame()
+    drawCard()
+    moveCard(Where from, Where to)
+    checkWin() -> bool
+    displayGameState()
+    
+
+Class Where
+    string locationType
+    int index
+    methods:
+    describeLocation() -> string
