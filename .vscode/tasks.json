@@ -8,7 +8,7 @@
         "args": [
           "-g",
           "main.cpp",
-          "Classes/Person.cpp",
+          "Classes/Card.cpp",
           "-o",
           "main.exe",
 
