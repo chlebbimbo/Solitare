@@ -1,0 +1,2 @@
+# Solitare
+Pasjans na konkurs
