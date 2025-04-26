@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include "Classes/Card.h"
+#include <thread>
 
 using namespace std;
 
@@ -39,7 +40,7 @@ void shuffleDeck(vector<Card>& deck) {
     }
 }
 
-
+//Setup the columns
 void setup(vector<Card>& deck, vector<vector<Card>>& columns) {
     for (int i = 0; i < 7; i++) { 
         for (int j = 0; j <= i; j++) { 
@@ -54,13 +55,14 @@ void setup(vector<Card>& deck, vector<vector<Card>>& columns) {
 
 // Function to display Solitare
 void display(const vector<Card>& deck, const vector<vector<Card>>& columns, const vector<vector<Card>>& ends, int deckTop) {
-
+    
+    cout<<"Solitare"<<endl;
     cout<<deck[deckTop].reveal()+"               ";
     cout<<""<<endl;
     cout << "_______________________________________" << endl;
 
     // Display the columns row by row
-    for (int i = 0; i < findLargest(columns); i++) { 
+    for (int i = 0; i <= findLargest(columns); i++) { 
         for (int j = 0; j < 7; j++) { // Loop through each column
             if (i < columns[j].size()) { 
                 if (columns[j][i].isUp()) {
@@ -76,8 +78,9 @@ void display(const vector<Card>& deck, const vector<vector<Card>>& columns, cons
     }
 }
 
-void execute(int difficulty, string move, vector<Card>& deck, const vector<vector<Card>>& columns, const vector<vector<Card>>& ends, int& deckTop){
-    if(move == "draw"){ //If input is draw
+void execute(int difficulty, string move, vector<Card>& deck, vector<vector<Card>>& columns, vector<vector<Card>>& ends, int& deckTop){
+   
+    if(move == "draw"){ //Draw card from deck
         if(deck.size() == 0){cout<<"Nie ma z czego dobierać!"<<endl; return;}//Check if deck is empty
         if(deckTop>=difficulty){
         deckTop-=difficulty;
@@ -88,6 +91,34 @@ void execute(int difficulty, string move, vector<Card>& deck, const vector<vecto
             return;
         }
     }
+
+    if(move.substr(0,4) == "move"){//Move cards
+        string from, to, howMany;
+         int flag = 1;
+        for(int i=5;i<move.length()-1;i++){
+            if(move[i]==' '){
+                continue;
+            }
+            if(flag==1){
+                flag++;
+                from+=move[i];
+                i++;
+                from+=move[i];
+                continue;
+            }
+            if(flag==2){
+                flag++;
+                to+=move[i];
+                i++;
+                to+=move[i];
+                continue;
+            }
+            if(flag==3){howMany+=move[i];}
+        }
+        //title=from+" "+to+" "+howMany;
+        
+    }
+    
 }
 
 int main() {
@@ -100,7 +131,8 @@ int main() {
 
     vector<vector<Card>> columns(7); 
     vector<vector<Card>> ends(4); 
-
+    
+    
     string move;
     int difficulty = 1;
 
@@ -113,8 +145,10 @@ int main() {
     while(move != "stop"){
         cin>>move;
         system("cls");
-        execute(difficulty, move, deck, columns, ends, deckTop);
+        
         display(deck, columns, ends, deckTop);
+        execute(difficulty, move, deck, columns, ends, deckTop);
+\
     }
     
 
