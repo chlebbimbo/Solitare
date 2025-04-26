@@ -14,8 +14,14 @@ class Card {
     Card(string value, string suit, bool faceUp = false);
 
     string reveal() const {
-    return value+""+suit+"  "+(faceUp ? "odkryta" : "zakryta");
+      if(value == "10"){
+         return value+""+suit;
+      } else {
+         return value+suit+" ";
+      }
+    
     }
     void flip() { faceUp = !faceUp; }
     bool isRed() const { return suit == "♦️" || suit == "❤️"; }
+    bool isUp() const {return faceUp;}
 };
